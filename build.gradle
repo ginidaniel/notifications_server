@@ -1,0 +1,31 @@
+plugins {
+    id 'java'
+}
+
+group 'com.inspiringsolutions'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    junitVersion = '4.12'
+    log4jVersion = '2.8.2'
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: "${junitVersion}"
+
+    compile group: 'javax.mail', name: 'mail', version: '1.5.0-b01'
+
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: "${log4jVersion}"
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: "${log4jVersion}"
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.7'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.2'
+    compile group: 'org.slf4j', name: 'jcl-over-slf4j', version: '1.7.25'
+
+    implementation 'com.google.firebase:firebase-admin:7.1.0'
+}
