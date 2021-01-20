@@ -3,7 +3,8 @@ package model;
 public enum NotificationType {
 
     EVENT_ACTIVITY_ADDED(1, false, true, false),
-    EVENT_ACTIVITY_UPDATED(2, false, true, false);
+    EVENT_ACTIVITY_UPDATED(2, false, true, false),
+    EVENT_CHANGE_STATUS(3, false, true, false);
 //    EVENT_ADDED(3, R.string.notification_event_added),
 //    EVENT_CANCELLED(4, R.string.notification_event_cancelled),
 //    EVENT_FULL(5, R.string.notification_event_full),

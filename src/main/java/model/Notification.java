@@ -10,6 +10,8 @@ public class Notification {
 
     boolean toShow = true;
     boolean toPush = true;
+    boolean processed = false;
+
 
     int priority;
     NotificationType type;
@@ -125,6 +127,14 @@ public class Notification {
 
     public void setUserNames(List<String> userNames) {
         this.userNames = userNames;
+    }
+
+    public boolean isProcessed() {
+        return processed;
+    }
+
+    public void setProcessed(boolean processed) {
+        this.processed = processed;
     }
 
     @Override

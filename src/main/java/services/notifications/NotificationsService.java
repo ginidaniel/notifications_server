@@ -29,7 +29,7 @@ public class NotificationsService {
         List<Notification> notifications = new ArrayList<>();
 
         //asynchronously retrieve multiple documents
-        ApiFuture<QuerySnapshot> future = FirebaseConnection.getFirestoreFB().collection("notifications").whereEqualTo("toPush", true).get();
+        ApiFuture<QuerySnapshot> future = FirebaseConnection.getFirestoreFB().collection("notifications").whereEqualTo("processed", false).get();
         // future.get() blocks on response
         List<QueryDocumentSnapshot> documents = null;
 
@@ -57,6 +57,11 @@ public class NotificationsService {
 
     public void fetchUsersTargeted(List<String> users, DataAccessListener<Map<String, UserNotifications>> listener) {
         Map<String, UserNotifications> notifications = new HashMap<>();
+
+        if (users==null || users.size()==0) {
+            listener.onSuccess(notifications);
+            return;
+        }
 
         ApiFuture<QuerySnapshot> future = FirebaseConnection.getFirestoreFB().collection("user_notifications").whereIn("username", users).get();
         // future.get() blocks on response
@@ -93,7 +98,7 @@ public class NotificationsService {
         if (notification.getUserNames().size()!=0)
             notification.setToShow(false); // To not create more Items on the users list as it has been created.
         else
-            notification.setToPush(false); // So the Notification Service won't pick it next time. All users notified.
+            notification.setProcessed(true); // So the Notification Service won't pick it next time. All users were notified.
 
         notification.setUpdated(Timestamp.of(new Date()));
         ApiFuture<WriteResult> result = FirebaseConnection.getFirestoreFB().collection("notifications")

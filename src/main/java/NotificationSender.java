@@ -26,28 +26,31 @@ public class NotificationSender {
                         if (notification.isToShow())
                             notificationsService.saveUserNotifications(createItems(notification, targeted));
 
-                    // 3rd Step - Remove from targeted: A - Whom will never be pushed; B - Whom will be pushed later
-                               // Leaving on the users list only users will be notified in future. Verification step 4.
+                        if (notification.isToPush()) {
+                            // 3rd Step - Remove from targeted: A - Whom will never be pushed; B - Whom will be pushed later
+                            // Leaving on the users list only users will be notified in future. Verification step 4.
+                            List<String> never = removeNeverTargets(notification.getType(), targeted);
+                            notification.getUserNames().removeAll(never);
+                            List<String> later = removeLaterTargets(notification, targeted);
 
-                        List<String> never = removeNeverTargets(notification.getType(), targeted);
-                        notification.getUserNames().removeAll(never);
-                        List<String> later = removeLaterTargets(notification, targeted);
+                            // 4th Step - Remove targets from notification, leaving whom will be notified later.
+                            // Remaining in targeted are the one to push now, so we remove them, leaven just the later ones
+                            notification.getUserNames().removeAll(targeted.keySet());
 
-                    // 4th Step - Remove targets from notification, leaving whom will be notified later.
-                        // Ramaining in targeted are the one to push now, so we remove them, leaven just the later ones
-                        notification.getUserNames().removeAll(targeted.keySet());
+                            //Verification step, users left should be the same than later size.
+                            if (notification.getUserNames().size()!=later.size())
+                                System.out.println("Something went wrong, users.size | later.size " + notification.getUserNames().size() + "|" +  later.size());
 
-                        //Verification step, users left should be the same than later size.
-                        if (notification.getUserNames().size()!=later.size())
-                            System.out.println("Something went wrong, users.size | later.size " + notification.getUserNames().size() + "|" +  later.size());
+                            // 5th Step - Generate the Messages to Push (including targeted tokens) and Send
+                            FirebaseService.sendNotifications(notification.getId(), getTokens(targeted));
+                        }
+                        else
+                            // Nothing else to do. clean the users to notify.
+                            notification.getUserNames().clear();
 
                         notificationsService.updateNotification(notification);
-
-                    // 5th Step - Generate the Messages to Push (including targeted tokens) and Send
-                        FirebaseService.sendNotifications(notification.getId(), getTokens(targeted));
                 }
             });
-
         }
     }
 
@@ -89,8 +92,9 @@ public class NotificationSender {
 
     private static List<String> getTokens(Map<String, UserNotifications> targeted) {
         List<String> tokens = new ArrayList<>();
-        for (String username : targeted.keySet())
+        for (String username : targeted.keySet()) {
             tokens.addAll(targeted.get(username).getTokens());
+        }
         return tokens;
     }
 
