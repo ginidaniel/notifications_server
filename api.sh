@@ -11,4 +11,4 @@ fi
 #export VERTX_OPTS='-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8001 -Dvertx.metrics.options.enabled=false'
 
 #export JAVA_OPTS="$JVM_OPTS $VERTX_OPTS $API_OPTS"
-java $JVM_OPTS -jar pots-server-*.jar -cp .
+java $JVM_OPTS -jar notifications_server-*.jar -cp .

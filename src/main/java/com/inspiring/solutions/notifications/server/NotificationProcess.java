@@ -1,6 +1,8 @@
 package com.inspiring.solutions.notifications.server;
 
 
+import com.inspiring.solutions.notifications.server.tasks.NotificationTask;
+
 import java.util.*;
 
 public class NotificationProcess {

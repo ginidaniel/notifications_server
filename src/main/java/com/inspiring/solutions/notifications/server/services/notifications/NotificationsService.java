@@ -7,6 +7,11 @@ import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
 
 import com.google.cloud.firestore.WriteResult;
+import com.inspiring.solutions.notifications.server.listeners.DataAccessListener;
+import com.inspiring.solutions.notifications.server.model.Notification;
+import com.inspiring.solutions.notifications.server.model.UserNotificationItem;
+import com.inspiring.solutions.notifications.server.model.UserNotifications;
+import com.inspiring.solutions.notifications.server.utils.FirebaseConnection;
 
 import java.util.*;
 import java.util.concurrent.ExecutionException;
