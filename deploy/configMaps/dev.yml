@@ -1,0 +1,11 @@
+kind: "List"
+apiVersion: "v1"
+items:
+  - apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: notifications-config
+      namespace: servers
+    data:
+      envprop: |
+        env.type=dev

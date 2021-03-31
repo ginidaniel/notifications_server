@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info">
+    <Properties>
+        <Property name="log-path">/opt/notifications/logs</Property>
+        <Property name="appName">notifications-server</Property>
+        <Property name="pattern">$${env:ENVIRONMENT:-local} | %-5p | %d{ISO8601} | [NOTIFICATIONS] | {%t} | %c{1} | %m%n</Property>
+    </Properties>
+    
+    <Appenders>
+        <Console name="STDOUT" target="SYSTEM_OUT">
+            <PatternLayout pattern="${pattern}"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Logger name="com.inspiring.solutions" level="INFO" additivity="false">
+        	<AppenderRef ref="STDOUT" level="INFO"/>
+        </Logger>
+        <Root level="INFO">
+            <AppenderRef ref="STDOUT" level="INFO" />
+        </Root>
+    </Loggers>
+</Configuration>

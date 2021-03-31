@@ -13,6 +13,7 @@
 out/
 .idea/
 .gradle/
+build/
 idea/
 
 # Package Files #
