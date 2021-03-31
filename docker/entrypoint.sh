@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
 
-mo notifications-server.properties.tmpl > notifications-server.properties
+mo notifications_server.properties.tmpl > notifications_server.properties
 
-echo "Launch the app: "
+echo "Starting the process: "
 
-#launch the app
-java $PUBLISHER_OPTS $JAVA_GC_OPTS -cp .:notifications-server-1.0.0.jar com.tesco.ess.publisher.PublisherRunnerQueue
+#launch the process
+java $NOTIFIER_OPTS $JAVA_GC_OPTS -cp .:notifications_server-1.0.0.jar com.inspiring.solutions.notifications.server.NotificationProcess

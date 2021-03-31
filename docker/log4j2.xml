@@ -2,7 +2,7 @@
 <Configuration status="info">
     <Properties>
         <Property name="log-path">/opt/notifications/logs</Property>
-        <Property name="appName">notifications-server</Property>
+        <Property name="appName">notifications_server</Property>
         <Property name="pattern">$${env:ENVIRONMENT:-local} | %-5p | %d{ISO8601} | [NOTIFICATIONS] | {%t} | %c{1} | %m%n</Property>
     </Properties>
     
