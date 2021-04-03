@@ -42,25 +42,13 @@ shift $((OPTIND-1))  #This tells getopts to move on to the next argument.
 
 echo "Notifications Server Docker Tag ::" $TAG
 
-# script to get the aws user id and token into to  gradle
-LOGIN_STRING='aws ecr get-login --region eu-west-1 --no-include-email --profile default'
-${LOGIN_STRING} > login.sh 
+./gradlew clean build
 
-USERNAME=$(echo $(cut -d' ' -f4 login.sh))
-TOKEN=$(echo $(cut -d' ' -f6 login.sh))
+rm ./docker/notifications_server-1.0.0.jar
+cp ./build/libs/notifications_server-*.jar ./docker/notifications_server-1.0.0.jar
 
-./copy_jar.sh
+docker rmi notifications-server:*
 
-REPOSITORY_URL=$(echo $(cut -d' ' -f7 login.sh)| cut -c9-)
-chmod +x login.sh
-./login.sh
+docker build --tag="notifications-server:$TAG" .
 
-# Added new code to pull the base image first inorder for gradle docker plugin to build the image
-docker pull $REPOSITORY_URL/essearch/ess-jre:1.1
-docker pull $REPOSITORY_URL/essearch/ubuntu-ess-jre:1.0
-
-docker build --tag="$REPOSITORY_URL/pots/notifications-server:$TAG" .
-
-docker push $REPOSITORY_URL/pots/notifications-server:$TAG
-
-docker rmi $REPOSITORY_URL/pots/notifications-server:$TAG
+#// docker push $REPOSITORY_URL/pots/notifications-server:$TAG

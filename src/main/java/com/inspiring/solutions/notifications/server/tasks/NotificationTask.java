@@ -4,6 +4,8 @@ import com.inspiring.solutions.notifications.server.listeners.DataAccessListener
 import com.inspiring.solutions.notifications.server.model.*;
 import com.inspiring.solutions.notifications.server.services.FirebaseService;
 import com.inspiring.solutions.notifications.server.services.notifications.NotificationsService;
+//import org.apache.logging.log4j.LogManager;
+//import org.apache.logging.log4j.Logger;
 
 import java.util.*;
 
@@ -11,9 +13,12 @@ public class NotificationTask extends TimerTask {
 
     static NotificationsService notificationsService = NotificationsService.getInstance();
 
+//    private static final Logger LOG = LogManager.getLogger(NotificationTask.class);
+
     @Override
     public void run() {
-        System.out.println("Starting.. Fetching Pending Notifications");
+//        LOG.info("Starting.. Fetching Pending Notifications");
+        //System.out.println("Starting.. Fetching Pending Notifications");
         notificationsService.fetchPending(NotificationTask::handleNotifications);
     }
 

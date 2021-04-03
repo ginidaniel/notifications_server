@@ -20,11 +20,10 @@ public class FirebaseConnection {
 
         try {
 
-
             FileInputStream serviceAccount =
                     new FileInputStream("pots-firebase-adminsdk.json");
 
-            FirebaseOptions options = new FirebaseOptions.Builder()
+            FirebaseOptions options = FirebaseOptions.builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                     .setDatabaseUrl("https://eventango-92fe8.firebaseio.com")
                     .build();

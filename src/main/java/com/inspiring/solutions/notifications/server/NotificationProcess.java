@@ -2,13 +2,18 @@ package com.inspiring.solutions.notifications.server;
 
 
 import com.inspiring.solutions.notifications.server.tasks.NotificationTask;
+//import org.apache.logging.log4j.LogManager;
+//import org.apache.logging.log4j.Logger;
 
 import java.util.*;
 
 public class NotificationProcess {
 
+ //   private static final Logger LOG = LogManager.getLogger(NotificationProcess.class);
+
     public static void main (String[] args) {
-        System.out.println("Initializing.. Notifications starts");
+
+ //       LOG.info("Initializing.. Notifications starts");
 
         Timer timer = new Timer();
         NotificationTask nTask = new NotificationTask();

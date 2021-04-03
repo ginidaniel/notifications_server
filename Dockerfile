@@ -1,11 +1,14 @@
-FROM 756427081490.dkr.ecr.eu-west-1.amazonaws.com/essearch/ess-jre:1.1
+FROM openjdk:8
 MAINTAINER pointsoftango@gmail.com "pointsoftango@gmail.com"
 
 ENV NOTIFIER_HOME /opt/app/
+ENV NOTIFIER_LOGS /opt/notifications/logs/
 RUN mkdir -p $NOTIFIER_HOME
+RUN mkdir -p $NOTIFIER_LOGS
 
-RUN apk add --no-cache --update curl
-RUN apk add
+RUN apt update
+#RUN apt install curl
+
 
 COPY docker/* $NOTIFIER_HOME
 

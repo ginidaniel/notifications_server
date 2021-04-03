@@ -12,3 +12,5 @@ fi
 
 #export JAVA_OPTS="$JVM_OPTS $VERTX_OPTS $API_OPTS"
 java $JVM_OPTS -jar notifications_server-*.jar -cp .
+
+java -Xmx1g -Xms1g -jar notifications_server-*.jar -cp .

@@ -1,7 +1,7 @@
 package com.inspiring.solutions.notifications.server.utils;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+//import org.apache.logging.log4j.LogManager;
+//import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,7 +9,7 @@ import java.util.*;
 
 public class NotificationMessages {
 
-    private static final Logger LOG = LogManager.getLogger(NotificationMessages.class);
+//    private static final Logger LOG = LogManager.getLogger(NotificationMessages.class);
 
     private final static Properties properties = new Properties();
     private final static String fileName = "properties/messages.properties";
@@ -20,7 +20,7 @@ public class NotificationMessages {
             InputStream stream = ClassLoader.getSystemResource(fileName).openStream();
             properties.load(stream);
         } catch (IOException e) {
-            LOG.error("Could not load indexer properties", e);
+//            LOG.error("Could not load indexer properties", e);
         }
     }
 
