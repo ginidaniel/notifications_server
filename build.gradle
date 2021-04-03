@@ -1,32 +1,107 @@
 plugins {
+    id 'application'
     id 'java'
+    id 'idea'
+  //  id 'com.github.johnrengelman.shadow' version '6.1.0'
 }
 
 group 'com.inspiring.solutions'
 version '1.0.0'
 
+//wrapper {
+//    gradleVersion = "6.8.3"
+//}
+//application {
+//    mainClass = 'com.inspiring.solutions.notifications.server.NotificationProcess'
+//}
 
-sourceCompatibility = 1.8
+//sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
 }
 
+//configurations {
+//    // configuration that holds jars to include in the jar
+//    extraLibs
+//}
+
 ext {
     junitVersion = '4.12'
     log4jVersion = '2.8.2'
+    fireAdmin = '7.1.1'
 }
+
+//configurations {
+//    // configuration that holds jars to include in the jar
+//    extraLibs
+//}
+//configurations {
+//    fatJar
+//}
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: "${junitVersion}"
+    compile 'com.google.firebase:firebase-admin:7.1.1'
 
-    compile group: 'javax.mail', name: 'mail', version: '1.5.0-b01'
-
-    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: "${log4jVersion}"
-    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: "${log4jVersion}"
-    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.7'
-    compile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.2'
-    compile group: 'org.slf4j', name: 'jcl-over-slf4j', version: '1.7.25'
-
-    implementation 'com.google.firebase:firebase-admin:7.1.0'
 }
+  //  shadow localGroovy()
+ //   shadow gradleApi()
+    //testCompile group: 'junit', name: 'junit', version: "${junitVersion}"
+
+//    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: "${log4jVersion}"
+ //   compile group: 'com.google.firebase', name: 'firebase-admin', version: "${fireAdmin}"
+
+//    classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.1'
+    //configurations.implementation.extendsFrom(configurations.extraLibs)
+
+//
+//jar {
+//    from sourceSets.main.java.srcDirs
+//}
+//
+//task fatJar(type: Jar) {
+//    manifest {
+//        attributes 'Main-Class': 'com.inspiring.solutions.notifications.server.NotificationProcess'
+//    }
+//    baseName = 'notifications_server-all'
+//    from {
+//        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+//    }
+//    with jar
+//}
+
+mainClassName = 'com.inspiring.solutions.notifications.server.NotificationProcess'
+
+
+//task relocateShadowJar(type: ConfigureShadowRelocation) {
+//    target = tasks.shadowJar
+//}
+//
+//tasks.shadowJar.dependsOn tasks.relocateShadowJar
+
+//
+//sourceSets {
+//    main {
+//        java.srcDirs += generatedSrcDir
+//        output.dir(builtBy: 'generateServiceProxy', generateSrcPath)
+//    }
+//}
+//
+//jar {
+//    from sourceSets.main.allSource
+//    baseName = this.properties['mavenArtifactId']
+//    group = this.properties['group']
+//    version = this.properties['version']
+//}
+//
+//task fatJar(type: Jar) {
+//    manifest {
+//        attributes('Main-Class': 'com.inspiring.solutions.notifications.server.NotificationProcess')
+//    }
+//    baseName = this.properties['mavenArtifactId']
+//    group = this.properties['group']
+//    version = this.properties['version']
+//    classifier = 'all'
+//    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+//    with jar
+//}
