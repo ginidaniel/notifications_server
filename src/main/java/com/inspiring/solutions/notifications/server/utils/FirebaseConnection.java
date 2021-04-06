@@ -21,7 +21,7 @@ public class FirebaseConnection {
         try {
 
             FileInputStream serviceAccount =
-                    new FileInputStream("pots-firebase-adminsdk.json");
+                    new FileInputStream(FirebaseConnection.class.getClassLoader().getResource("pots-firebase-adminsdk.json").getFile());
 
             FirebaseOptions options = FirebaseOptions.builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
