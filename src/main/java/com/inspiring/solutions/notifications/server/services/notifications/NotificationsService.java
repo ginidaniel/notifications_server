@@ -2,11 +2,8 @@ package com.inspiring.solutions.notifications.server.services.notifications;
 
 import com.google.api.core.ApiFuture;
 import com.google.cloud.Timestamp;
-import com.google.cloud.firestore.DocumentSnapshot;
-import com.google.cloud.firestore.QueryDocumentSnapshot;
-import com.google.cloud.firestore.QuerySnapshot;
+import com.google.cloud.firestore.*;
 
-import com.google.cloud.firestore.WriteResult;
 import com.inspiring.solutions.notifications.server.listeners.DataAccessListener;
 import com.inspiring.solutions.notifications.server.model.Notification;
 import com.inspiring.solutions.notifications.server.model.UserNotificationItem;
@@ -81,15 +78,17 @@ public class NotificationsService {
     }
 
     public void saveUserNotifications(Map<String, UserNotificationItem> items) {
-        for (String username: items.keySet()) {
-            ApiFuture<WriteResult> result = FirebaseConnection.getFirestoreFB().collection("user_notifications").document(username)
-                    .collection("notifications").document(items.get(username).getId()).set(items.get(username));
-            try {
-                result.get();
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
-                //TODO LOG this error
+        try {
+            WriteBatch batch = FirebaseConnection.getFirestoreFB().batch();
+            for (String username: items.keySet()) {
+                DocumentReference documentReference = FirebaseConnection.getFirestoreFB().collection("user_notifications")
+                        .document(username).collection("notifications").document(items.get(username).getId());
+                batch.set(documentReference, items.get(username));
             }
+            batch.commit().get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            //TODO LOG this error
         }
     }
 
@@ -99,7 +98,7 @@ public class NotificationsService {
         else
             notification.setProcessed(true); // So the Notification Service won't pick it next time. All users were notified.
 
-        notification.setUpdated(Timestamp.of(new Date()));
+        notification.setUpdated(Timestamp.now());
         ApiFuture<WriteResult> result = FirebaseConnection.getFirestoreFB().collection("notifications")
                                             .document(notification.getId()).set(notification);
         try {

@@ -8,6 +8,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.cloud.FirestoreClient;
 import com.google.firebase.cloud.StorageClient;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -49,12 +50,18 @@ public class FirebaseConnection {
         }*/
     }
 
-
     public static Firestore getFirestoreFB()  {
         if (defaultApp==null)
             connectFBApp();
 
         return FirestoreClient.getFirestore(defaultApp);
+    }
+
+    public static FirebaseMessaging getFirebaseMessaging()  {
+        if (defaultApp==null)
+            connectFBApp();
+
+        return FirebaseMessaging.getInstance(defaultApp);
     }
 
     public static StorageClient getStorageClientFB()  {

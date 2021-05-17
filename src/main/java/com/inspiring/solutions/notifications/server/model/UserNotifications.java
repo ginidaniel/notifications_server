@@ -11,7 +11,8 @@ public class UserNotifications {
     String username;
     List<String> tokens;
     NotificationSett settings;
-    private String timeZone;
+    String timeZone;
+    String language;
     Timestamp lastUpdate;
 
     //To load Items when needed.
@@ -70,6 +71,14 @@ public class UserNotifications {
 
     public List<UserNotificationItem> getNotifications() {
         return notifications;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
     public boolean areThereUnreadNotifications() {

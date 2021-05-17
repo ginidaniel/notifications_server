@@ -12,8 +12,7 @@ public class Notification {
     boolean toPush = true;
     boolean processed = false;
 
-
-    int priority;
+    NotificationPriority priority;
     NotificationType type;
     Map<String, String> data;
     Map<String, String> action;
@@ -24,6 +23,7 @@ public class Notification {
     Timestamp created;
     Timestamp updated;
 
+    String topic;
     List<String> userNames;
 
     public Notification() {
@@ -41,11 +41,11 @@ public class Notification {
         this.id = id;
     }
 
-    public int getPriority() {
+    public NotificationPriority getPriority() {
         return priority;
     }
 
-    public void setPriority(int priority) {
+    public void setPriority(NotificationPriority priority) {
         this.priority = priority;
     }
 
@@ -135,6 +135,14 @@ public class Notification {
 
     public void setProcessed(boolean processed) {
         this.processed = processed;
+    }
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
     }
 
     @Override

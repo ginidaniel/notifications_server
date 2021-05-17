@@ -1,13 +1,15 @@
 package com.inspiring.solutions.notifications.server.model;
 
+import com.inspiring.solutions.notifications.server.utils.Constants;
+
 public enum NotificationType {
 
-    EVENT_ACTIVITY_ADDED(1, false, true, false),
-    EVENT_ACTIVITY_UPDATED(2, false, true, false),
-    EVENT_CHANGE_STATUS(3, false, true, false),
-    EVENT_ACTIVITY_REMOVED_ARTISTS(4, false, true, false),
-    EVENT_ACTIVITY_ADDED_ARTISTS(5, false, true, false);
-
+    EVENT_ACTIVITY_ADDED(1, true, true, false, Constants.EVENT_ACTIVITY_ADDED),
+    EVENT_ACTIVITY_UPDATED(2, true, true, false, Constants.EVENT_ACTIVITY_UPDATED),
+    EVENT_ACTIVITY_REMOVED(3, true, true, false, Constants.EVENT_ACTIVITY_REMOVED),
+    EVENT_ACTIVITY_ADDED_ARTISTS(15, false, true, false, Constants.EVENT_ACTIVITY_ADDED_ARTISTS),
+    EVENT_ACTIVITY_REMOVED_ARTISTS(14, false, true, false, Constants.EVENT_ACTIVITY_REMOVED_ARTISTS),
+    EVENT_CHANGE_STATUS(11, false, true, false, Constants.EVENT_CHANGE_STATUS);
 
 //    EVENT_ADDED(3, R.string.notification_event_added),
 //    EVENT_CANCELLED(4, R.string.notification_event_cancelled),
@@ -22,13 +24,16 @@ public enum NotificationType {
     private boolean interested;
     private boolean registered;
     private boolean general;
+    private String preText;
 
-    NotificationType(int code, boolean interested, boolean registered, boolean general) {
+    NotificationType(int code, boolean interested, boolean registered, boolean general, String preText) {
         this.code = code;
         this.interested = interested;
         this.registered = registered;
         this.general = general;
+        this.preText = preText;
     }
+
 
     public int getCode() {
         return code;
@@ -44,6 +49,10 @@ public enum NotificationType {
 
     public boolean isGeneral() {
         return general;
+    }
+
+    public String getPreText() {
+        return preText;
     }
 
     public static NotificationType getNotificationType(int code) {
