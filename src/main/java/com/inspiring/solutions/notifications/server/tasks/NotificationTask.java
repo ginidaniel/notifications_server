@@ -19,7 +19,6 @@ public class NotificationTask extends TimerTask {
     @Override
     public void run() {
 //        LOG.info("Starting.. Fetching Pending Notifications");
-        //System.out.println("Starting.. Fetching Pending Notifications");
         notificationsService.fetchPending(NotificationTask::handleNotifications);
     }
 
@@ -32,8 +31,6 @@ public class NotificationTask extends TimerTask {
 
             if (notification.getUserNames()!=null)
                 notificationsManager.handleNotificationsMulticast(notification);
-
-            notificationsService.updateNotification(notification);
         }
     }
 

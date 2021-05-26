@@ -1,6 +1,5 @@
 package com.inspiring.solutions.notifications.server.managers;
 
-import com.inspiring.solutions.notifications.server.languages.English_GB;
 import com.inspiring.solutions.notifications.server.languages.Language;
 import com.inspiring.solutions.notifications.server.listeners.DataAccessListener;
 import com.inspiring.solutions.notifications.server.model.*;
@@ -20,8 +19,34 @@ public class NotificationsManager {
     //TODO Add users to topics
     public void handleNotificationsByTopic(Notification notification) {
         //TODO How to create Items?
-        if (notification.isToPush())
-            FirebaseService.sendNotifications(notification.getTopic(), createNotification(notification, English_GB.getInstance()), notification.getId());
+        //1st Step: For now we fetch users per event... (topic)
+        notificationsService.fetchUsersTargetedByTopic(notification, new DataAccessListener<Map<String, UserNotifications>>() {
+            @Override
+            public void onSuccess(Map<String, UserNotifications> targeted) {
+                // 2nd Step - Create notifications for users (if the notification is to be shown)
+                if (notification.isToShow())
+                    notificationsService.saveUserNotifications(createItems(notification, targeted));
+
+                if (notification.isToPush()) {
+                    // 3rd Step - Remove from targeted: A - Whom will never be pushed; B - Whom will be pushed later
+                    // Leaving on the users list only users will be notified in future. Verification step 4.
+                    removeNeverTargets(notification.getType(), targeted);
+                    List<String> later = removeLaterTargets(notification, targeted);
+
+                    // 4th Step - Add to userNames whom will be notified later.
+                    notification.setUserNames(later);
+
+                    // 5th Step - Generates a map per language to send notifications on expected language
+                    Map<Language, List<String>> languageMap = groupTokensByLanguage(targeted);
+                    for (Language language : languageMap.keySet())
+                        // 6th Step - Generate the Messages to Push (including targeted tokens) and Send
+                        FirebaseService.sendNotifications(languageMap.get(language), createNotification(notification, language), notification.getId());
+                }
+
+                notificationsService.updateNotification(notification);
+            }
+        });
+
     }
 
     public void handleNotificationsMulticast(Notification notification) {
@@ -59,6 +84,8 @@ public class NotificationsManager {
                 else
                     // Nothing else to do. clean the users to notify.
                     notification.getUserNames().clear();
+
+                notificationsService.updateNotification(notification);
             }
         });
     }
@@ -147,7 +174,7 @@ public class NotificationsManager {
 
         int hour = calendar.get(Calendar.HOUR);
 
-        return !((hour >= 7 && hour <= 10) || (hour >= 18 && hour <= 22));
+        return !((hour >= 7 && hour <= 10) || (hour >= 17 && hour <= 23));
     }
 
 }
