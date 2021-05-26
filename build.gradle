@@ -4,7 +4,7 @@ plugins {
     id 'idea'
 }
 
-group 'com.inspiring.solutions'
+group 'com.pointsoftango'
 version '1.0.0'
 
 repositories {
@@ -21,11 +21,11 @@ dependencies {
     compile 'com.google.firebase:firebase-admin:7.1.1'
 }
 
-mainClassName = 'com.inspiring.solutions.notifications.server.NotificationProcess'
+mainClassName = 'com.pointsoftango.server.notifications.NotificationProcess'
 
 jar {
     manifest {
-        attributes 'Main-Class': 'com.inspiring.solutions.notifications.server.NotificationProcess'
+        attributes 'Main-Class': 'com.pointsoftango.server.notifications.NotificationProcess'
     }
     from {
         configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
